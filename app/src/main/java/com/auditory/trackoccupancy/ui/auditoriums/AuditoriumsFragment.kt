@@ -96,7 +96,7 @@ class AuditoriumsFragment : Fragment() {
                         binding.auditoriumsRecyclerView.visibility = View.GONE
                         binding.errorTextView.visibility = View.VISIBLE
                         binding.swipeRefreshLayout.isRefreshing = false
-                        binding.errorTextView.text = "Auditorium list is unavailable. Please contact app admin at masadkovskaya@edu.hse.ru"
+                        binding.errorTextView.text = getString(R.string.auditorium_list_unavailable_error)
                         auditoriumsAdapter.submitList(emptyList())
                         Log.e("AuditoriumsFragment", "Error loading auditoriums: ${state.message}")
                     }
