@@ -27,7 +27,6 @@
     <string name="people_count">People: %d</string>
     <string name="capacity">Capacity: %d</string>
     <string name="occupancy_rate">Occupancy: %.1f%%</string>
-    <string name="last_updated">Last updated: %s</string>
     <string name="data_stale">Data may be outdated</string>
     <string name="no_data">No data available</string>
 
@@ -51,6 +50,16 @@
     <!-- Camera -->
     <string name="view_camera">View Camera</string>
     <string name="camera_label">Camera</string>
+    <string name="view_occupancy_graph">View Occupancy Graph</string>
+
+    <!-- Occupancy Graph -->
+    <string name="occupancy_graph">Occupancy Graph</string>
+    <string name="average_occupancy_over_time">Average occupancy over time</string>
+    <string name="time">Time</string>
+    <string name="people_count_label">People Count</string>
+    <string name="select_date">Select Date</string>
+    <string name="selected_date">Selected date:</string>
+    <string name="last_updated">Last updated: %s</string>
 
     <!-- Language -->
     <string name="language">Language</string>

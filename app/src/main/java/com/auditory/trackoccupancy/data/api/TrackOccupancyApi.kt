@@ -53,4 +53,13 @@ interface TrackOccupancyApi {
     // Camera snapshot
     @GET("/api/snapshot")
     suspend fun getCameraSnapshot(@Query("mac") mac: String): Response<ResponseBody>
+
+    // Auditorium statistics
+    @GET("/v1/cities/{cityId}/buildings/{buildingId}/auditories/{auditoriumId}/statistics")
+    suspend fun getAuditoriumStatistics(
+        @Path("cityId") cityId: Long,
+        @Path("buildingId") buildingId: Long,
+        @Path("auditoriumId") auditoriumId: Long,
+        @Query("day") day: String
+    ): Response<List<AuditoriumStatistics>>
 }

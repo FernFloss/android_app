@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_auditoriums_to_camera"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_auditoriums_to_occupancy_graph"
+            app:destination="@id/occupancyGraphFragment" />
     </fragment>
 
 
@@ -56,6 +59,25 @@
         android:name="com.auditory.trackoccupancy.ui.camera.CameraFragment"
         android:label="@string/cameras"
         tools:layout="@layout/fragment_camera">
+        <argument
+            android:name="cityId"
+            app:argType="long" />
+        <argument
+            android:name="buildingId"
+            app:argType="long" />
+        <argument
+            android:name="auditoriumId"
+            app:argType="long" />
+        <argument
+            android:name="auditoriumName"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/occupancyGraphFragment"
+        android:name="com.auditory.trackoccupancy.ui.occupancy.OccupancyGraphFragment"
+        android:label="@string/occupancy_graph"
+        tools:layout="@layout/fragment_occupancy_graph">
         <argument
             android:name="cityId"
             app:argType="long" />

@@ -27,7 +27,6 @@
     <string name="people_count">Людей: %d</string>
     <string name="capacity">Вместимость: %d</string>
     <string name="occupancy_rate">Занятость: %.1f%%</string>
-    <string name="last_updated">Последнее обновление: %s</string>
     <string name="data_stale">Данные могут быть устаревшими</string>
     <string name="no_data">Данные недоступны</string>
 
@@ -51,6 +50,16 @@
     <!-- Camera -->
     <string name="view_camera">Посмотреть камеру</string>
     <string name="camera_label">Камера</string>
+    <string name="view_occupancy_graph">Посмотреть график занятости</string>
+
+    <!-- Occupancy Graph -->
+    <string name="occupancy_graph">График посещаемости</string>
+    <string name="average_occupancy_over_time">Средняя посещаемость по времени</string>
+    <string name="time">Время</string>
+    <string name="people_count_label">Количество людей</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="selected_date">Выбранная дата: %s</string>
+    <string name="last_updated">Последнее обновление: %s</string>
 
     <!-- Language -->
     <string name="language">Язык</string>

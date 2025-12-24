@@ -65,6 +65,15 @@ class OccupancyRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getAuditoriumStatistics(
+        cityId: Long,
+        buildingId: Long,
+        auditoriumId: Long,
+        day: String
+    ): Result<List<AuditoriumStatistics>> {
+        return safeApiCall { api.getAuditoriumStatistics(cityId, buildingId, auditoriumId, day) }
+    }
+
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): Result<T> {
         return try {
             val response = apiCall()

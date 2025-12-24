@@ -10,7 +10,8 @@ import com.auditory.trackoccupancy.R
 import com.auditory.trackoccupancy.databinding.ItemAuditoriumBinding
 
 class AuditoriumsAdapter(
-    private val onCameraClick: (AuditoriumWithOccupancy) -> Unit
+    private val onCameraClick: (AuditoriumWithOccupancy) -> Unit,
+    private val onGraphClick: (AuditoriumWithOccupancy) -> Unit
 ) : ListAdapter<AuditoriumWithOccupancy, AuditoriumsAdapter.AuditoriumViewHolder>(AuditoriumDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuditoriumViewHolder {
@@ -33,6 +34,13 @@ class AuditoriumsAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onCameraClick(getItem(position))
+                }
+            }
+
+            binding.graphButton.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onGraphClick(getItem(position))
                 }
             }
         }

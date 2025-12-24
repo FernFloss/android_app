@@ -19,3 +19,8 @@ data class AuditoriumOccupancyResponse(
     @SerializedName("time_diff_minutes") val timeDiffMinutes: Double,
     @SerializedName("warning") val warning: String? = null
 )
+
+data class AuditoriumStatistics(
+    @SerializedName("hour") val hour: Int,
+    @SerializedName("avg_person_count") val avgPersonCount: Double
+)

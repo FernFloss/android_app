@@ -84,6 +84,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     kapt("com.github.bumptech.glide:compiler:4.16.0")
 
+    // Charts - temporarily removed due to dependency issues
+    // implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     // Preferences
     implementation("androidx.preference:preference-ktx:1.2.1")
 

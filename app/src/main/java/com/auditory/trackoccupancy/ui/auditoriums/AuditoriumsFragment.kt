@@ -48,18 +48,32 @@ class AuditoriumsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        auditoriumsAdapter = AuditoriumsAdapter { auditoriumWithOccupancy ->
-            val auditorium = auditoriumWithOccupancy.auditorium
-            Log.d("AuditoriumsFragment", "Camera selected for auditorium: ${auditorium.auditoriumNumber}")
-            // Navigate to camera view for live feed
-            val action = AuditoriumsFragmentDirections.actionAuditoriumsToCamera(
-                cityId = args.cityId,
-                buildingId = args.buildingId,
-                auditoriumId = auditorium.id,
-                auditoriumName = "${getString(R.string.auditorium_label)} ${auditorium.auditoriumNumber}"
-            )
-            findNavController().navigate(action)
-        }
+        auditoriumsAdapter = AuditoriumsAdapter(
+            onCameraClick = { auditoriumWithOccupancy ->
+                val auditorium = auditoriumWithOccupancy.auditorium
+                Log.d("AuditoriumsFragment", "Camera selected for auditorium: ${auditorium.auditoriumNumber}")
+                // Navigate to camera view for live feed
+                val action = AuditoriumsFragmentDirections.actionAuditoriumsToCamera(
+                    cityId = args.cityId,
+                    buildingId = args.buildingId,
+                    auditoriumId = auditorium.id,
+                    auditoriumName = "${getString(R.string.auditorium_label)} ${auditorium.auditoriumNumber}"
+                )
+                findNavController().navigate(action)
+            },
+            onGraphClick = { auditoriumWithOccupancy ->
+                val auditorium = auditoriumWithOccupancy.auditorium
+                Log.d("AuditoriumsFragment", "Graph selected for auditorium: ${auditorium.auditoriumNumber}")
+                // Navigate to occupancy graph
+                val action = AuditoriumsFragmentDirections.actionAuditoriumsToOccupancyGraph(
+                    cityId = args.cityId,
+                    buildingId = args.buildingId,
+                    auditoriumId = auditorium.id,
+                    auditoriumName = "${getString(R.string.auditorium_label)} ${auditorium.auditoriumNumber}"
+                )
+                findNavController().navigate(action)
+            }
+        )
 
         binding.auditoriumsRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
