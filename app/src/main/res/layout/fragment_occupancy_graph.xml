@@ -99,6 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="top"
                 android:textSize="14sp"
                 android:gravity="start"
                 tools:text="Selected date: 2024-12-24" />
@@ -109,6 +110,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="top"
                 android:layout_marginStart="8dp"
                 android:text="@string/select_date"
                 android:textSize="12sp"

@@ -99,7 +99,7 @@ class OccupancyGraphFragment : Fragment() {
             selectedDate
         }
 
-        binding.selectedDateTextView.text = getString(R.string.selected_date, formattedDate).removeSuffix(":").trim()
+        binding.selectedDateTextView.text = getString(R.string.selected_date, formattedDate)
     }
 
     private fun observeViewModel() {

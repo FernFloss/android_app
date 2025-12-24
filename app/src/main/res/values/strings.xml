@@ -58,7 +58,7 @@
     <string name="time">Time</string>
     <string name="people_count_label">People Count</string>
     <string name="select_date">Select Date</string>
-    <string name="selected_date">Selected date:</string>
+    <string name="selected_date">Selected date: %s</string>
     <string name="last_updated">Last updated: %s</string>
 
     <!-- Language -->
