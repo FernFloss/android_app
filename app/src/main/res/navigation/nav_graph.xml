@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/citiesFragment">
+
+    <fragment
+        android:id="@+id/citiesFragment"
+        android:name="com.auditory.trackoccupancy.ui.cities.CitiesFragment"
+        android:label="@string/cities"
+        tools:layout="@layout/fragment_cities">
+        <action
+            android:id="@+id/action_cities_to_buildings"
+            app:destination="@id/buildingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/buildingsFragment"
+        android:name="com.auditory.trackoccupancy.ui.buildings.BuildingsFragment"
+        android:label="@string/buildings"
+        tools:layout="@layout/fragment_buildings">
+        <argument
+            android:name="cityId"
+            app:argType="long" />
+        <argument
+            android:name="cityName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_buildings_to_auditoriums"
+            app:destination="@id/auditoriumsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/auditoriumsFragment"
+        android:name="com.auditory.trackoccupancy.ui.auditoriums.AuditoriumsFragment"
+        android:label="@string/auditoriums"
+        tools:layout="@layout/fragment_auditoriums">
+        <argument
+            android:name="cityId"
+            app:argType="long" />
+        <argument
+            android:name="buildingId"
+            app:argType="long" />
+        <argument
+            android:name="buildingName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_auditoriums_to_camera"
+            app:destination="@id/cameraFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.auditory.trackoccupancy.ui.camera.CameraFragment"
+        android:label="@string/cameras"
+        tools:layout="@layout/fragment_camera">
+        <argument
+            android:name="cityId"
+            app:argType="long" />
+        <argument
+            android:name="buildingId"
+            app:argType="long" />
+        <argument
+            android:name="auditoriumId"
+            app:argType="long" />
+        <argument
+            android:name="auditoriumName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Отслеживание Занятости</string>
+
+    <!-- Authentication -->
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="login_hint">Введите логин</string>
+    <string name="password_hint">Введите пароль</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="logging_in">Вход в систему...</string>
+
+    <!-- Navigation -->
+    <string name="cities">Города</string>
+    <string name="buildings">Здания</string>
+    <string name="auditoriums">Аудитории</string>
+    <string name="occupancy">Занятость</string>
+    <string name="cameras">Камеры</string>
+
+    <!-- Content descriptions -->
+    <string name="camera_snapshot">Снимок с камеры</string>
+    <string name="refresh">Обновить</string>
+    <string name="back">Назад</string>
+
+    <!-- Occupancy -->
+    <string name="people_count">Людей: %d</string>
+    <string name="capacity">Вместимость: %d</string>
+    <string name="occupancy_rate">Занятость: %.1f%%</string>
+    <string name="last_updated">Последнее обновление: %s</string>
+    <string name="data_stale">Данные могут быть устаревшими</string>
+    <string name="no_data">Данные недоступны</string>
+
+    <!-- Auditorium Details -->
+    <string name="auditorium_label">Аудитория</string>
+    <string name="capacity_label">Вместимость:</string>
+    <string name="occupied_label">Занято:</string>
+
+    <!-- Errors -->
+    <string name="network_error">Ошибка сети</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="retry">Повторить</string>
+
+    <!-- General -->
+    <string name="loading">Загрузка...</string>
+    <string name="error">Ошибка</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
+
+    <!-- Camera -->
+    <string name="view_camera">Посмотреть камеру</string>
+    <string name="camera_label">Камера</string>
+
+    <!-- Language -->
+    <string name="language">Язык</string>
+    <string name="english">English</string>
+    <string name="russian">Русский</string>
+    <string name="language_changed">Язык изменен. Перезапустите приложение для применения изменений.</string>
+
+    <!-- Errors -->
+    <string name="auditorium_list_unavailable_error">Список аудиторий недоступен. Пожалуйста, свяжитесь с администратором приложения по адресу masadkovskaya@edu.hse.ru</string>
+</resources>
