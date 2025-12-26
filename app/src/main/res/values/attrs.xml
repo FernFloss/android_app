@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom theme attributes for better dark mode support -->
+    <declare-styleable name="TrackOccupancy">
+        <attr name="cardBackgroundColor" format="color" />
+        <attr name="textColorPrimary" format="color" />
+        <attr name="textColorSecondary" format="color" />
+        <attr name="dividerColor" format="color" />
+        <attr name="occupancyLowColor" format="color" />
+        <attr name="occupancyMediumColor" format="color" />
+        <attr name="occupancyHighColor" format="color" />
+        <attr name="occupancyEmptyColor" format="color" />
+    </declare-styleable>
+</resources>

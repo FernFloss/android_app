@@ -4,23 +4,51 @@
     <style name="Theme.TrackOccupancy" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/icons</item>
+        <item name="colorPrimaryContainer">@color/primary_light</item>
+        <item name="colorOnPrimaryContainer">@color/primary_dark</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/accent</item>
-        <item name="colorSecondaryVariant">@color/accent</item>
         <item name="colorOnSecondary">@color/icons</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Navigation bar color -->
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="colorSecondaryContainer">@color/accent</item>
+        <item name="colorOnSecondaryContainer">@color/icons</item>
+
+        <!-- Tertiary colors -->
+        <item name="colorTertiary">@color/occupancy_medium</item>
+        <item name="colorOnTertiary">@color/icons</item>
+
+        <!-- Surface colors -->
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+
         <!-- Background colors -->
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorSurface">@color/card_background</item>
-        <item name="colorOnSurface">@color/primary_text</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+
         <!-- Error colors -->
         <item name="colorError">@color/occupancy_high</item>
         <item name="colorOnError">@color/icons</item>
+        <item name="colorErrorContainer">@color/error_background</item>
+        <item name="colorOnErrorContainer">@color/occupancy_high</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSurface</item>
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <!-- Window background -->
+        <item name="android:windowBackground">?attr/colorSurface</item>
+
+        <!-- Custom theme attributes -->
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="textColorPrimary">@color/primary_text</item>
+        <item name="textColorSecondary">@color/secondary_text</item>
+        <item name="dividerColor">@color/divider</item>
+        <item name="occupancyLowColor">@color/occupancy_low</item>
+        <item name="occupancyMediumColor">@color/occupancy_medium</item>
+        <item name="occupancyHighColor">@color/occupancy_high</item>
+        <item name="occupancyEmptyColor">@color/occupancy_empty</item>
     </style>
 
     <style name="Theme.TrackOccupancy.NoActionBar" parent="Theme.TrackOccupancy">

@@ -19,4 +19,10 @@
     <color name="background">#FAFAFA</color>
     <color name="card_background">#FFFFFF</color>
     <color name="error_background">#FFEBEE</color>
+
+    <!-- Surface colors for Material Design -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F5F5F5</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_surface_variant">#49454F</color>
 </resources>

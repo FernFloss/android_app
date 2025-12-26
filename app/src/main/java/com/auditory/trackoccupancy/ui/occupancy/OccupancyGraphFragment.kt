@@ -42,17 +42,10 @@ class OccupancyGraphFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupToolbar()
         setupRecyclerView()
         setupDatePickerButton()
         observeViewModel()
         loadData()
-    }
-
-    private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
     }
 
     private fun setupRecyclerView() {
