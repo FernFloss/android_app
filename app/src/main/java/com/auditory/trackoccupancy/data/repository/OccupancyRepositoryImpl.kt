@@ -2,6 +2,7 @@ package com.auditory.trackoccupancy.data.repository
 
 import com.auditory.trackoccupancy.data.api.TrackOccupancyApi
 import com.auditory.trackoccupancy.data.model.*
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.io.IOException
@@ -70,8 +71,41 @@ class OccupancyRepositoryImpl @Inject constructor(
         buildingId: Long,
         auditoriumId: Long,
         day: String
-    ): Result<List<AuditoriumStatistics>> {
-        return safeApiCall { api.getAuditoriumStatistics(cityId, buildingId, auditoriumId, day) }
+    ): Result<AuditoriumStatisticsResponse> {
+        return try {
+            val response = api.getAuditoriumStatistics(cityId, buildingId, auditoriumId, day)
+            if (response.isSuccessful) {
+                val responseBody = response.body()?.string()
+                if (responseBody.isNullOrEmpty()) {
+                    return Result.failure(Exception("Empty response body"))
+                }
+
+                val gson = Gson()
+
+                // Try to parse as wrapper object first
+                try {
+                    val wrapperResponse = gson.fromJson(responseBody, AuditoriumStatisticsResponse::class.java)
+                    Result.success(wrapperResponse)
+                } catch (e: Exception) {
+                    // If wrapper parsing fails, try parsing as plain array
+                    try {
+                        val statsArray = gson.fromJson(responseBody, Array<AuditoriumStatistics>::class.java)
+                        Result.success(AuditoriumStatisticsResponse(statsArray.toList(), null))
+                    } catch (e2: Exception) {
+                        Result.failure(Exception("Failed to parse response: ${e2.message}"))
+                    }
+                }
+            } else if (response.code() == 404) {
+                // Treat 404 as no data available (empty response)
+                Result.success(AuditoriumStatisticsResponse(emptyList(), "No data available"))
+            } else {
+                Result.failure(Exception("API call failed: ${response.message()}"))
+            }
+        } catch (e: IOException) {
+            Result.failure(Exception("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): Result<T> {

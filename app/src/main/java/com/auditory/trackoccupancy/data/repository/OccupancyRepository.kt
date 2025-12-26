@@ -10,5 +10,5 @@ interface OccupancyRepository {
     suspend fun getOccupancyByAuditorium(cityId: Long, buildingId: Long, auditoriumId: Long, timestamp: String? = null): Result<OccupancyResult>
     suspend fun getCamerasByAuditorium(cityId: Long, buildingId: Long, auditoriumId: Long): Result<List<Camera>>
     suspend fun getCameraSnapshot(mac: String): Result<ByteArray>
-    suspend fun getAuditoriumStatistics(cityId: Long, buildingId: Long, auditoriumId: Long, day: String): Result<List<AuditoriumStatistics>>
+    suspend fun getAuditoriumStatistics(cityId: Long, buildingId: Long, auditoriumId: Long, day: String): Result<AuditoriumStatisticsResponse>
 }

@@ -61,5 +61,5 @@ interface TrackOccupancyApi {
         @Path("buildingId") buildingId: Long,
         @Path("auditoriumId") auditoriumId: Long,
         @Query("day") day: String
-    ): Response<List<AuditoriumStatistics>>
+    ): Response<okhttp3.ResponseBody>
 }

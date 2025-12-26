@@ -60,6 +60,7 @@
     <string name="select_date">Выбрать дату</string>
     <string name="selected_date">Выбранная дата: %s</string>
     <string name="last_updated">Последнее обновление: %s</string>
+    <string name="statistics_unavailable">Статистика за этот день недоступна</string>
 
     <!-- Language -->
     <string name="language">Язык</string>

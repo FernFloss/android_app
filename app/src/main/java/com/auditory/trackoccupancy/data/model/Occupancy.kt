@@ -20,6 +20,11 @@ data class AuditoriumOccupancyResponse(
     @SerializedName("warning") val warning: String? = null
 )
 
+data class AuditoriumStatisticsResponse(
+    @SerializedName("stats") val stats: List<AuditoriumStatistics>,
+    @SerializedName("warning") val warning: String? = null
+)
+
 data class AuditoriumStatistics(
     @SerializedName("hour") val hour: Int,
     @SerializedName("avg_person_count") val avgPersonCount: Double

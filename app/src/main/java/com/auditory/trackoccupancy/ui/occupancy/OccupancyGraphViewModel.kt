@@ -36,9 +36,14 @@ class OccupancyGraphViewModel @Inject constructor(
                 // Then get the statistics
                 val result = occupancyRepository.getAuditoriumStatistics(cityId, buildingId, auditoriumId, date)
 
-                result.onSuccess { statistics ->
+                result.onSuccess { statisticsResponse ->
+                    if (statisticsResponse.stats.isEmpty()) {
+                        _uiState.value = OccupancyGraphUiState.Empty
+                        return@onSuccess
+                    }
+
                     // Convert statistics to OccupancyDataPoint format
-                    val dataPoints = statistics.map { stat ->
+                    val dataPoints = statisticsResponse.stats.map { stat ->
                         // Create timestamp for the selected date at the given hour
                         val calendar = java.util.Calendar.getInstance()
                         val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
@@ -71,6 +76,7 @@ class OccupancyGraphViewModel @Inject constructor(
 sealed class OccupancyGraphUiState {
     object Loading : OccupancyGraphUiState()
     data class Success(val data: List<OccupancyDataPoint>, val lastUpdated: Long?) : OccupancyGraphUiState()
+    object Empty : OccupancyGraphUiState()
     data class Error(val message: String) : OccupancyGraphUiState()
 }
 

@@ -60,6 +60,7 @@
     <string name="select_date">Select Date</string>
     <string name="selected_date">Selected date: %s</string>
     <string name="last_updated">Last updated: %s</string>
+    <string name="statistics_unavailable">Statistics for this date are unavailable</string>
 
     <!-- Language -->
     <string name="language">Language</string>

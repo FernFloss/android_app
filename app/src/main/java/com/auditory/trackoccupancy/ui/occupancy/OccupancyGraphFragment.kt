@@ -118,6 +118,13 @@ class OccupancyGraphFragment : Fragment() {
 
                         updateOccupancyData(state.data)
                     }
+                    is OccupancyGraphUiState.Empty -> {
+                        binding.loadingProgressBar.visibility = View.GONE
+                        binding.errorTextView.visibility = View.VISIBLE
+                        binding.graphContainer.visibility = View.GONE
+                        binding.errorTextView.text = getString(R.string.statistics_unavailable)
+                        Log.d("OccupancyGraphFragment", "No statistics available for the selected date")
+                    }
                     is OccupancyGraphUiState.Error -> {
                         binding.loadingProgressBar.visibility = View.GONE
                         binding.errorTextView.visibility = View.VISIBLE
