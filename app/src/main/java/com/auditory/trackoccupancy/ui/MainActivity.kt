@@ -67,21 +67,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAuthentication() {
-        // TEMPORARILY DISABLED AUTHENTICATION CHECK
-        // Log.d("MainActivity", "Starting authentication check")
-        // lifecycleScope.launch {
-        //     viewModel.isLoggedIn.collect { isLoggedIn ->
-        //         Log.d("MainActivity", "Authentication check result: isLoggedIn = $isLoggedIn")
-        //         if (!isLoggedIn) {
-        //             Log.w("MainActivity", "User not logged in, redirecting to LoginActivity")
-        //             navigateToLogin()
-        //         } else {
-        //             Log.d("MainActivity", "User is logged in, proceeding with main app flow")
+        Log.d("MainActivity", "Starting authentication check")
+        lifecycleScope.launch {
+            viewModel.isLoggedIn.collect { isLoggedIn ->
+                Log.d("MainActivity", "Authentication check result: isLoggedIn = $isLoggedIn")
+                if (!isLoggedIn) {
+                    Log.w("MainActivity", "User not logged in, redirecting to LoginActivity")
+                    navigateToLogin()
+                } else {
+                    Log.d("MainActivity", "User is logged in, proceeding with main app flow")
                     // User is logged in, proceed with main app flow
                     setupNavigation()
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
     }
 
     private fun setupNavigation() {

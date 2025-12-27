@@ -32,7 +32,7 @@ class AuthRepositoryImpl @Inject constructor(
             if (response.isSuccessful) {
                 response.body()?.let { loginResponse ->
                     Log.d("AuthRepository", "Login response body: status=${loginResponse.status}")
-                    if (loginResponse.status == "OK") {
+                    if (loginResponse.status.equals("ok", ignoreCase = true)) {
                         Log.d("AuthRepository", "Login successful, status: ${loginResponse.status}")
                         // Since backend doesn't provide token, save a dummy token to indicate login success
                         saveAuthToken("logged_in_${System.currentTimeMillis()}")
