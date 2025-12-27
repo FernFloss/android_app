@@ -1,102 +1,83 @@
 package com.auditory.trackoccupancy.utils
 
-import android.content.Context
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import org.junit.Assert.*
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
 
+/**
+ * Unit tests for ThemeUtils.
+ * 
+ * Note: Tests for isDarkTheme() require Android Context which is not available
+ * in pure unit tests. Those tests should be in androidTest with Robolectric or
+ * on-device instrumented tests.
+ * 
+ * The tests here verify that the correct modes are set via AppCompatDelegate.
+ */
 class ThemeUtilsTest {
 
-    @Mock
-    private lateinit var mockContext: Context
-
-    @Mock
-    private lateinit var mockConfiguration: Configuration
-
-    @Mock
-    private lateinit var mockResources: android.content.res.Resources
-
-    fun setUp() {
-        MockitoAnnotations.openMocks(this)
-        `when`(mockContext.resources).thenReturn(mockResources)
-        `when`(mockResources.configuration).thenReturn(mockConfiguration)
-    }
-
     @Test
-    fun `isDarkTheme returns true when UI mode is night`() {
-        setUp()
-        // Given
-        mockConfiguration.uiMode = Configuration.UI_MODE_NIGHT_YES
-
+    fun `setThemeMode sets MODE_NIGHT_YES correctly`() {
         // When
-        val result = ThemeUtils.isDarkTheme(mockContext)
+        ThemeUtils.setThemeMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         // Then
-        assertTrue(result)
+        assertEquals(AppCompatDelegate.MODE_NIGHT_YES, AppCompatDelegate.getDefaultNightMode())
     }
 
     @Test
-    fun `isDarkTheme returns false when UI mode is not night`() {
-        setUp()
-        // Given
-        mockConfiguration.uiMode = Configuration.UI_MODE_NIGHT_NO
-
+    fun `setThemeMode sets MODE_NIGHT_NO correctly`() {
         // When
-        val result = ThemeUtils.isDarkTheme(mockContext)
+        ThemeUtils.setThemeMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // Then
-        assertFalse(result)
+        assertEquals(AppCompatDelegate.MODE_NIGHT_NO, AppCompatDelegate.getDefaultNightMode())
     }
 
     @Test
-    fun `getCurrentThemeMode calls AppCompatDelegate getDefaultNightMode`() {
+    fun `setThemeMode sets MODE_NIGHT_FOLLOW_SYSTEM correctly`() {
         // When
-        ThemeUtils.getCurrentThemeMode()
+        ThemeUtils.setThemeMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
-        // Then - This would normally verify the call, but AppCompatDelegate is a singleton
-        // In a real test, we would use a more sophisticated mocking approach
+        // Then
+        assertEquals(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, AppCompatDelegate.getDefaultNightMode())
     }
 
     @Test
-    fun `setThemeMode calls AppCompatDelegate setDefaultNightMode`() {
-        // Given
-        val mode = AppCompatDelegate.MODE_NIGHT_YES
-
-        // When
-        ThemeUtils.setThemeMode(mode)
-
-        // Then - This would normally verify the call, but AppCompatDelegate is a singleton
-        // In a real test, we would use a more sophisticated mocking approach
-    }
-
-    @Test
-    fun `followSystemTheme sets correct mode`() {
-        // When
-        ThemeUtils.followSystemTheme()
-
-        // Then - This would normally verify the call, but AppCompatDelegate is a singleton
-        // In a real test, we would use a more sophisticated mocking approach
-    }
-
-    @Test
-    fun `forceLightTheme sets correct mode`() {
-        // When
-        ThemeUtils.forceLightTheme()
-
-        // Then - This would normally verify the call, but AppCompatDelegate is a singleton
-        // In a real test, we would use a more sophisticated mocking approach
-    }
-
-    @Test
-    fun `forceDarkTheme sets correct mode`() {
+    fun `forceDarkTheme sets MODE_NIGHT_YES`() {
         // When
         ThemeUtils.forceDarkTheme()
 
-        // Then - This would normally verify the call, but AppCompatDelegate is a singleton
-        // In a real test, we would use a more sophisticated mocking approach
+        // Then
+        assertEquals(AppCompatDelegate.MODE_NIGHT_YES, ThemeUtils.getCurrentThemeMode())
+    }
+
+    @Test
+    fun `forceLightTheme sets MODE_NIGHT_NO`() {
+        // When
+        ThemeUtils.forceLightTheme()
+
+        // Then
+        assertEquals(AppCompatDelegate.MODE_NIGHT_NO, ThemeUtils.getCurrentThemeMode())
+    }
+
+    @Test
+    fun `followSystemTheme sets MODE_NIGHT_FOLLOW_SYSTEM`() {
+        // When
+        ThemeUtils.followSystemTheme()
+
+        // Then
+        assertEquals(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, ThemeUtils.getCurrentThemeMode())
+    }
+
+    @Test
+    fun `getCurrentThemeMode returns current mode`() {
+        // Given
+        ThemeUtils.setThemeMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+        // When
+        val currentMode = ThemeUtils.getCurrentThemeMode()
+
+        // Then
+        assertEquals(AppCompatDelegate.MODE_NIGHT_YES, currentMode)
     }
 }

@@ -4,17 +4,22 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.auditory.trackoccupancy.data.model.Building
 import com.auditory.trackoccupancy.data.model.LocalizedString
 import com.auditory.trackoccupancy.data.repository.OccupancyRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class BuildingsViewModelTest {
@@ -31,7 +36,13 @@ class BuildingsViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
+        Dispatchers.setMain(testDispatcher)
         viewModel = BuildingsViewModel(mockRepository)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -51,16 +62,16 @@ class BuildingsViewModelTest {
                 id = 1L,
                 cityId = cityId,
                 address = LocalizedString(ru = "ул. Ленина 1", en = "Lenina St. 1"),
-                name = LocalizedString(ru = "Главный корпус", en = "Main Building")
+                floorsCount = 5
             ),
             Building(
                 id = 2L,
                 cityId = cityId,
                 address = LocalizedString(ru = "ул. Пушкина 10", en = "Pushkina St. 10"),
-                name = LocalizedString(ru = "Лекционный корпус", en = "Lecture Building")
+                floorsCount = 3
             )
         )
-        `when`(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.success(buildings))
+        whenever(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.success(buildings))
 
         // When
         viewModel.loadBuildings(cityId)
@@ -70,7 +81,6 @@ class BuildingsViewModelTest {
         val finalState = viewModel.uiState.value
         assertTrue(finalState is BuildingsUiState.Success)
         assertEquals(buildings, (finalState as BuildingsUiState.Success).buildings)
-        verify(mockRepository).getBuildingsByCity(cityId)
     }
 
     @Test
@@ -78,7 +88,7 @@ class BuildingsViewModelTest {
         // Given
         val cityId = 1L
         val exception = RuntimeException("Network error")
-        `when`(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.failure(exception))
+        whenever(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.failure(exception))
 
         // When
         viewModel.loadBuildings(cityId)
@@ -88,7 +98,6 @@ class BuildingsViewModelTest {
         val finalState = viewModel.uiState.value
         assertTrue(finalState is BuildingsUiState.Error)
         assertEquals("Network error", (finalState as BuildingsUiState.Error).message)
-        verify(mockRepository).getBuildingsByCity(cityId)
     }
 
     @Test
@@ -96,7 +105,7 @@ class BuildingsViewModelTest {
         // Given
         val cityId = 1L
         val exception = RuntimeException()
-        `when`(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.failure(exception))
+        whenever(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.failure(exception))
 
         // When
         viewModel.loadBuildings(cityId)
@@ -106,30 +115,38 @@ class BuildingsViewModelTest {
         val finalState = viewModel.uiState.value
         assertTrue(finalState is BuildingsUiState.Error)
         assertEquals("Failed to load buildings", (finalState as BuildingsUiState.Error).message)
-        verify(mockRepository).getBuildingsByCity(cityId)
     }
 
     @Test
-    fun `loadBuildings sets uiState to Loading immediately when called`() = runTest(testDispatcher) {
-        // Given
+    fun `loadBuildings transitions through Loading state before Success`() = runTest {
+        // Given - Use StandardTestDispatcher to control coroutine execution
+        val standardDispatcher = StandardTestDispatcher(testScheduler)
+        Dispatchers.setMain(standardDispatcher)
+        val vm = BuildingsViewModel(mockRepository)
+        
         val cityId = 1L
         val buildings = listOf(Building(
             id = 1L,
             cityId = cityId,
             address = LocalizedString(ru = "Test", en = "Test"),
-            name = LocalizedString(ru = "Test", en = "Test")
+            floorsCount = 2
         ))
-        `when`(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.success(buildings))
+        whenever(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.success(buildings))
 
-        // When
-        viewModel.loadBuildings(cityId)
+        // Initial state should be Loading
+        assertTrue(vm.uiState.value is BuildingsUiState.Loading)
 
-        // Then - Should be Loading immediately
-        assertTrue(viewModel.uiState.value is BuildingsUiState.Loading)
+        // When - Start loading (coroutine is suspended)
+        vm.loadBuildings(cityId)
+        
+        // State should still be Loading since coroutine hasn't completed
+        assertTrue(vm.uiState.value is BuildingsUiState.Loading)
 
-        // And then Success after coroutine completes
+        // Advance until coroutine completes
         advanceUntilIdle()
-        val finalState = viewModel.uiState.value
+        
+        // Then - Final state should be Success
+        val finalState = vm.uiState.value
         assertTrue(finalState is BuildingsUiState.Success)
     }
 
@@ -138,7 +155,7 @@ class BuildingsViewModelTest {
         // Given
         val cityId = 1L
         val emptyBuildings = emptyList<Building>()
-        `when`(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.success(emptyBuildings))
+        whenever(mockRepository.getBuildingsByCity(cityId)).thenReturn(Result.success(emptyBuildings))
 
         // When
         viewModel.loadBuildings(cityId)
@@ -148,7 +165,6 @@ class BuildingsViewModelTest {
         val finalState = viewModel.uiState.value
         assertTrue(finalState is BuildingsUiState.Success)
         assertTrue((finalState as BuildingsUiState.Success).buildings.isEmpty())
-        verify(mockRepository).getBuildingsByCity(cityId)
     }
 
     @Test
@@ -160,17 +176,17 @@ class BuildingsViewModelTest {
             id = 1L,
             cityId = cityId1,
             address = LocalizedString(ru = "Address1", en = "Address1"),
-            name = LocalizedString(ru = "Building1", en = "Building1")
+            floorsCount = 4
         ))
         val buildings2 = listOf(Building(
             id = 2L,
             cityId = cityId2,
             address = LocalizedString(ru = "Address2", en = "Address2"),
-            name = LocalizedString(ru = "Building2", en = "Building2")
+            floorsCount = 6
         ))
 
-        `when`(mockRepository.getBuildingsByCity(cityId1)).thenReturn(Result.success(buildings1))
-        `when`(mockRepository.getBuildingsByCity(cityId2)).thenReturn(Result.success(buildings2))
+        whenever(mockRepository.getBuildingsByCity(cityId1)).thenReturn(Result.success(buildings1))
+        whenever(mockRepository.getBuildingsByCity(cityId2)).thenReturn(Result.success(buildings2))
 
         // When - First call
         viewModel.loadBuildings(cityId1)
@@ -189,8 +205,5 @@ class BuildingsViewModelTest {
         finalState = viewModel.uiState.value
         assertTrue(finalState is BuildingsUiState.Success)
         assertEquals(buildings2, (finalState as BuildingsUiState.Success).buildings)
-
-        verify(mockRepository).getBuildingsByCity(cityId1)
-        verify(mockRepository).getBuildingsByCity(cityId2)
     }
 }

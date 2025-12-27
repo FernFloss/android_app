@@ -52,14 +52,11 @@ object TestUtils {
     fun createTestCamera(
         id: Long = 1L,
         auditoriumId: Long = 1L,
-        mac: String = "AA:BB:CC:DD:EE:FF",
-        nameRu: String = "Камера 1",
-        nameEn: String = "Camera 1"
+        mac: String = "AA:BB:CC:DD:EE:FF"
     ) = Camera(
         id = id,
         auditoriumId = auditoriumId,
-        mac = mac,
-        name = LocalizedString(ru = nameRu, en = nameEn)
+        mac = mac
     )
 
     fun createTestAuditoriumStatistics(
@@ -165,9 +162,7 @@ object TestUtils {
         createTestCamera(
             id = index.toLong(),
             auditoriumId = auditoriumId,
-            mac = "AA:BB:CC:DD:EE:${index.toString().padStart(2, '0')}",
-            nameRu = "Камера $index",
-            nameEn = "Camera $index"
+            mac = "AA:BB:CC:DD:EE:${index.toString().padStart(2, '0')}"
         )
     }
 

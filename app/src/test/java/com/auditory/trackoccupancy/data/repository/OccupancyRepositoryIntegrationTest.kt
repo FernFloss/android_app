@@ -196,10 +196,10 @@ class OccupancyRepositoryIntegrationTest {
 
     @Test
     fun `getAuditoriumStatistics handles invalid JSON response correctly`() = runTest {
-        // Given - Mock server returns invalid JSON
+        // Given - Mock server returns truly invalid/unparseable JSON
         val mockResponse = MockResponse()
             .setResponseCode(200)
-            .setBody("""{"invalid": json"}""")
+            .setBody("""not valid json at all""")
             .addHeader("Content-Type", "application/json")
 
         mockWebServer.enqueue(mockResponse)
